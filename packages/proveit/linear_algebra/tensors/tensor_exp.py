@@ -24,16 +24,22 @@ class TensorExp(Operation):
     def membership_object(self, element):
         return TesorExpMembership(element, self)
 
-    def _formatted(self, format_type, fence=True):
+    def _formatted(self, format_type, **kwargs):
         # changed from formatted to _formatted 2/14/2020 (wdc)
+
+        from proveit._core_.expression import maybe_fenced_string
         formatted_base = self.base.formatted(format_type, 
                                              fence=True, force_fence=True)
         formatted_exp = self.exponent.formatted(format_type, fence=True,
                                                 force_fence=True)
         if format_type == 'latex':
-            return formatted_base + r'^{\otimes ' + formatted_exp + '}'
+            inner_str = formatted_base + r'^{\otimes ' + formatted_exp + '}'
         elif format_type == 'string':
-            return formatted_base + '^{otimes ' + formatted_exp + '}'
+            inner_str = formatted_base + '^{otimes ' + formatted_exp + '}'
+        
+        kwargs['fence'] = (kwargs['force_fence'] if 'force_fence' in kwargs else False)
+
+        return maybe_fenced_string(inner_str, **kwargs)
 
     @equality_prover('do_reduced_simplified', 'do_reduced_simplify')
     def do_reduced_simplification(self, **defaults_config):

@@ -1053,6 +1053,7 @@ class TheoryFolderStorage:
                             return png_file.read(), relurl(png_path)
         # store the latex string in the latex file
         with open(latex_path, 'wb') as latex_file:
+            print(latex)
             latex_file.write(latex.encode('ascii'))
         # generate, store and return the png file
         png = self._generate_png(latex, config_latex_tool_fn)
