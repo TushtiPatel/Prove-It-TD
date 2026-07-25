@@ -1,6 +1,6 @@
 from proveit import (Operation, Literal, Lambda, ExprTuple, ExprRange,
                      UnsatisfiedPrerequisites, SimplificationDirectives,
-                     prover, equality_prover, relation_prover)
+                     defaults, prover, equality_prover, relation_prover)
 from proveit import (a, b, c, f, i, j, l, m, n, A, B, C, M, Q, U, X, Y,
                      alpha)
 from proveit.relations import TransRelUpdater
@@ -12,6 +12,7 @@ from proveit.abstract_algebra.generic_methods import (
 from proveit.linear_algebra import (IsVecSpace, VecAdd, VecSum, LinMaps,
                                     MatrixSpace, Norm, 
                                     IsHilbertSpace, Hspace)
+from IPython.display import display
 
 class Qmult(Operation):
     '''
@@ -897,10 +898,14 @@ class IsProperQmult(ClassMembership):
             except (ProofFailure, NotImplementedError):
                 pass
 
+        display(element)
+        defaults.debug_exprs.append(element)
         raise UnsatisfiedPrerequisites(
                 "%s is not known to be a complex number, vector in a "
                 "vector space over complex numbers, or a linear "
-                "mapping from one such vector space to another"
+                "mapping from one such vector space to another.\n" 
+                "See the displayed expressions in the output as well"
+                " as defaults.debug_exprs."
                 %(element))
                 
                 

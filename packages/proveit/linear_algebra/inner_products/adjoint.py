@@ -134,7 +134,11 @@ class Adj(Function):
         
 
         from proveit.physics.quantum.HHL import (adjoint_of_ket, adjoint_of_linear_combination_n_terms, 
+<<<<<<< Updated upstream
         adjoint_tensor_upto_n, adjoint_scalar_mult,adjoint_vecsum, adj_of_adj, adj_of_tensor_exp, adj_scalar)
+=======
+        adjoint_tensor_upto_n, adjoint_scalar_mult,adjoint_vecsum, adj_of_adj, adj_of_tensor_exp, adj_qmult_unary, adj_qmult_binary, adj_scalar)
+>>>>>>> Stashed changes
         from proveit.physics.quantum import Ket, Hspace, Qmult
         from proveit.linear_algebra import VecSum, TensorProd, ScalarMult, TensorExp
         from proveit import ExprTuple, Lambda
@@ -177,8 +181,25 @@ class Adj(Function):
             return simp
         
         if isinstance(_a, Qmult):
-            simp = adj_qmult.instantiate({A:_a.operands[0],B:_a.operands[1]})
-            return simp
+            print("self.operand: ",_a)
+
+        # Unary Qmult(A)
+            if _a.operands.is_single():
+                print("qmult unary")
+                simp = adj_qmult_unary.instantiate({A: _a.operands[0]})
+                print("adj_qmult successfully instantiated")
+                return simp
+        
+        # Binary Qmult(A, B)
+            elif _a.operands.is_double():
+                print("qmult binary")
+                simp = adj_qmult_binary.instantiate({A:_a.operands[0], B:_a.operands[1]})
+                print("adj_qmult successfully instantiated")
+                return simp
+            
+            # simp = adj_qmult.instantiate({A:_a.operands[0],B:_a.operands[1]})
+          
+            # return simp
         
         if InSet(_a, Complex).readily_provable():
             simp = adj_scalar.instantiate({x:_a})
