@@ -110,6 +110,9 @@ class Defaults:
         # Set to true when processing notebooks using build.py.
         self._executing_auto_build = False
 
+        # Append expressions to this list as errors occur
+        self.debug_exprs = []
+
     @property
     def running_theory_notebook(self):
         return self._running_theory_notebook

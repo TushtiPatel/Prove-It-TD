@@ -788,7 +788,8 @@ class IsProperQmult(ClassMembership):
                     _Y = linmap1.to_vspace
                     return thm.instantiate(
                             {Hspace:_Hspace, X:_X, Y:_Y, A:op1, B:op2})    
-            
+
+                defaults._element = element
                 raise UnsatisfiedPrerequisites(
                         "Binary Qmult operand membership is not known "
                         "to produce a well-formed Qmult: %s"%element)

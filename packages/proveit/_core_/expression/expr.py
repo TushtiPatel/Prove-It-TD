@@ -335,6 +335,14 @@ class Expression(metaclass=ExprType):
             Expression.default_labeled_expr_styles[
                     self._labeled_meaning_id] = styles
         """
+        # try:
+        #     # ltx = self.latex()
+        #     ltx = ''
+        # except:
+        #     ltx = ''
+        # if ltx == r'\sum_{{_{-}a}=0}^{2^{n_b} - 1} \left(\beta_{{_{-}a}} \cdot \left(\lvert u_{{_{-}a}} \rangle {\otimes} \left(\sum_{k=0}^{2^{n_t} - 1} \left(\alpha\left(k, j\right) \cdot \lvert k \rangle\right)\right)\right)\right)':
+        #     import traceback
+        #     # traceback.print_exc()
 
     def canonically_labeled(self):
         '''

@@ -962,13 +962,14 @@ class VecSum(GroupSum, VecOperation):
         if tensor_prod_summand:
             impl = tensor_prod_distribution_over_summation.instantiate(
                     {K:_K_sub, f:_f_sub, Q:_Q_sub, i:_i_sub, j:_j_sub,
-                     k:_k_sub, V:_V_sub, a:_a_sub, b:_b_sub, c:_c_sub})
+                     k:_k_sub, V:_V_sub, a:_a_sub, b:_b_sub, c:_c_sub}, preserve_all = True)
         else:
             impl = (tensor_prod_distribution_over_summation_with_scalar_mult.
                    instantiate(
                     {K:_K_sub, f:_f_sub, Q:_Q_sub, i:_i_sub, j:_j_sub,
                      k:_k_sub, V:_V_sub, a:_a_sub, b:_b_sub, c:_c_sub,
-                     s: _s_sub}))
+                     s: _s_sub}, preserve_all = True))
+            print("f_sub",_f_sub,"s_sub",_s_sub,"c_sub",_c_sub)
 
         expr = eq.update(impl.derive_consequent(
                 assumptions = defaults.assumptions + expr.conditions.entries).
