@@ -11,7 +11,7 @@ from proveit.abstract_algebra.generic_methods import (
         apply_association_thm, apply_disassociation_thm)
 from proveit.linear_algebra import (
         IsVecSpace, ScalarMult, VecOperation, VecAdd, VecSum,
-        deduce_as_vec_space, deduce_canonically_equal)
+        deduce_as_vec_space, deduce_as_inner_prod_space, deduce_canonically_equal)
 
 pkg = __package__
 
@@ -165,6 +165,61 @@ class TensorProd(VecOperation):
                                  %(_K, field))
         return tensor_prod_of_vec_spaces_is_vec_space.instantiate(
                 {K: _K, i: _i, V: _V})
+
+    @class_membership_prover
+    def deduce_as_inner_prod_space(self, **defaults_config):
+        '''
+        Deduce that the tensor product of innerproduct spaces is an innerproduct
+        space .
+        '''
+        from . import tensor_prod_of_inner_prod_spaces_is_inner_prod_space
+        _V = self.operands
+        _i = _V.num_elements()
+        _K = None
+        for operand in self.operands:
+            if isinstance(operand, ExprRange):
+                assumption = operand.parameter_condition()
+                assumptions = (
+                            defaults.assumptions + (assumption ,))
+                class_membership = deduce_as_inner_prod_space(
+                        operand.body, assumptions=assumptions)
+            else:
+                class_membership = deduce_as_inner_prod_space(operand)
+            field = class_membership.expr.field
+            if _K is None:
+                _K = field
+            elif _K != field:
+                raise ValueError("Vector spaces in tensor product have "
+                                    "different fields, %s ≠ %s"
+                                    %(_K, field))
+        return tensor_prod_of_inner_prod_spaces_is_inner_prod_space.instantiate(
+                {K: _K, i: _i, V: _V})
+
+    @class_membership_prover
+    def deduce_as_hilbert_space(self, **defaults_config):
+        '''
+        Deduce that the tensor product of vector spaces is a vector
+        space (the space containing tensor products over any vectors
+        within the corresponding vector spaces).
+        '''
+        from proveit.linear_algebra import deduce_as_hilbert_space
+        from . import tensor_prod_of_hilbert_spaces_is_hilbert_space
+        _V = self.operands
+        _i = _V.num_elements()
+        
+        for operand in self.operands:
+            if isinstance(operand, ExprRange):
+                assumption = operand.parameter_condition()
+                assumptions = (
+                            defaults.assumptions + (assumption ,))
+                class_membership = deduce_as_hilbert_space(
+                        operand.body, assumptions=assumptions)
+            else:
+                class_membership = deduce_as_hilbert_space(operand)
+            field = class_membership.expr.field
+            
+        return tensor_prod_of_hilbert_spaces_is_hilbert_space.instantiate(
+                {i: _i, V: _V})
 
     @equality_prover('associated', 'associate')
     def association(self, start_idx, length, *, field=None, 

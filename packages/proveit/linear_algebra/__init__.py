@@ -9,12 +9,13 @@ from .vector_sets import (
         Span, SpanningSets, LinDepSets, Bases, Dim)
 from .inner_products import (
         InnerProd, IsInnerProdSpace, IsHilbertSpace, Hspace,
-        Norm, OrthoNormBases, OrthoProj, Adj, deduce_as_inner_prod_space)
+        Norm, OrthoNormBases, OrthoProj, Adj, deduce_as_inner_prod_space, deduce_as_hilbert_space)
 from .linear_maps import (IsLinMap, LinMaps, LinMapAdd, Identity,
                           Commutator, AntiCommutator)
 from .matrices import (MatrixSpace, MatrixMult, MatrixExp,
                        Unitary, SpecialUnitary, Diagonal)
 from .tensors import TensorExp, TensorProd
+
 
 # KEEP THE FOLLOWING IN __init__.py FOR THEORY PACKAGES.
 #  Make additions above, or add to sys.modules[__name__].__dict__ below.

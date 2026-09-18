@@ -1,5 +1,5 @@
 from .is_inner_prod_space import IsInnerProdSpace, deduce_as_inner_prod_space
-from .is_hilbert_space import IsHilbertSpace
+from .is_hilbert_space import IsHilbertSpace, deduce_as_hilbert_space
 from .inner_prod import InnerProd
 from .norm import Norm
 from .ortho_norm_bases import OrthoNormBases
