@@ -134,11 +134,7 @@ class Adj(Function):
         
 
         from proveit.physics.quantum.HHL import (adjoint_of_ket, adjoint_of_linear_combination_n_terms, 
-<<<<<<< Updated upstream
-        adjoint_tensor_upto_n, adjoint_scalar_mult,adjoint_vecsum, adj_of_adj, adj_of_tensor_exp, adj_scalar)
-=======
         adjoint_tensor_upto_n, adjoint_scalar_mult,adjoint_vecsum, adj_of_adj, adj_of_tensor_exp, adj_qmult_unary, adj_qmult_binary, adj_scalar)
->>>>>>> Stashed changes
         from proveit.physics.quantum import Ket, Hspace, Qmult
         from proveit.linear_algebra import VecSum, TensorProd, ScalarMult, TensorExp
         from proveit import ExprTuple, Lambda
