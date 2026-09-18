@@ -1,5 +1,5 @@
 from proveit import Operation, Literal, prover
-from proveit import K, V, W
+from proveit import K, V, W, A
 from proveit.logic import SetMembership
 
 class LinMaps(Operation):
@@ -59,3 +59,20 @@ class LinMapsMembership(SetMembership):
 
     def __init__(self, element, domain):
         SetMembership.__init__(self, element, domain)
+
+    def side_effects(self, judgment):
+            yield self.adj_linmap
+
+    @prover
+    def adj_linmap(self, **defaults_config):
+        from proveit.physics.quantum.HHL import adj_linmaps, adj_linmaps_converse
+        from proveit.linear_algebra import Adj
+        element = self.element 
+        domain = self.domain
+        assert isinstance(domain, LinMaps)
+
+        if isinstance(element, Adj):
+            return adj_linmaps_converse.instantiate({A:element.operand,V:domain.from_vspace,W:domain.to_vspace})
+
+        else:
+            return adj_linmaps.instantiate({A:element,V:domain.from_vspace,W:domain.to_vspace})
