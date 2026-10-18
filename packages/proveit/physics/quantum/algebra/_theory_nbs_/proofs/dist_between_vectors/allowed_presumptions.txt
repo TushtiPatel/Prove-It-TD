@@ -34,3 +34,4 @@ proveit.logic.equality.sub_right_side_into
 proveit.logic.equality.sub_left_side_into
 proveit.numbers.negation.distribute_neg_through_binary_sum
 proveit.logic.equality.equals_reversal
+proveit.numbers.number_sets.complex_numbers.conjugate_complex_closure
